@@ -9,3 +9,5 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: bdots, mgcv, stats
+URL: https://github.com/daren3d/p1
+BugReports: https://github.com/daren3d/p1/issues
