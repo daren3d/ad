@@ -108,7 +108,7 @@ meth.external <- function(data, method, sig = 0.01){
     y <- data_i$y
     # fit model
     mod1 <- mgcv::gamm(y ~ s(x, bs = "bs"), correlation = nlme::corAR1())
-    rho <- nlme::intervals(mod1$lme, which = "var-cov")$corStruct[2]
+    rho <- summary(mod1$lme)$modelStruct$corStruct
     w <- nlme::corMatrix(nlme::Initialize(nlme::corAR1(rho),
                                           data.frame(x = x))) |>
       chol() |>
