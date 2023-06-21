@@ -17,7 +17,7 @@ external <- function(mod, x, w){
   n_obs <- length(x)
   ## Create hat matrix
   H <- matrix(as.numeric(NA), n_obs, n_obs)
-  for(j in 1:n){
+  for(j in 1:n_obs){
     y <- numeric(n_obs)
     y[j] <- 1
     mod2a <- mgcv::gam(y ~ s(x, bs = "bs", sp = mod$sp), fit = FALSE)
