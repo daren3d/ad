@@ -4,12 +4,14 @@
 \alias{external}
 \title{Eubank's externally standardized residual test}
 \usage{
-external(mod, x)
+external(mod, x, w)
 }
 \arguments{
 \item{mod}{A \code{gamObject} from \strong{mgcv}.}
 
 \item{x}{The independent variable, usually time.}
+
+\item{w}{The (decomposed) information matrix.}
 }
 \value{
 a list with p-values, diagonal of hat matrix and their sum (aka.

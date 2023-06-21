@@ -2,4 +2,7 @@
 
 export(external)
 export(internal)
+export(magic2gam)
+export(meth.external)
+export(meth.internal)
 export(pea_adjust)
