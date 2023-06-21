@@ -1,0 +1,11 @@
+Package: p1
+Title: Codename p1
+Version: 0.0.0.9000
+Authors@R: 
+    person("Daren", "Kuwaye", , "daren-kuwaye@uiowa.edu", role = c("aut", "cre"))
+Description: Implements Eubank's 1985 Diagnostics for smoothing splines.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: bdots, mgcv, stats
