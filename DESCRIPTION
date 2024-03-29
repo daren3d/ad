@@ -11,3 +11,6 @@ RoxygenNote: 7.2.3
 Imports: bdots, mgcv, nlme, stats
 URL: https://github.com/daren3d/p1
 BugReports: https://github.com/daren3d/p1/issues
+Depends: 
+    R (>= 2.10)
+LazyData: true
