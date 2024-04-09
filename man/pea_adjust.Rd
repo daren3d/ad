@@ -4,13 +4,15 @@
 \alias{pea_adjust}
 \title{Adjust for multiple comparisons.}
 \usage{
-pea_adjust(p, method)
+pea_adjust(res, method, alpha)
 }
 \arguments{
-\item{p}{A list, from \code{internal} or \code{external}.}
+\item{res}{A list, from \code{internal} or \code{external}.}
 
 \item{method}{A character with \emph{exact} match to stats::p.adjust.methods, "CW",
 "oleson", or a function in the global environment.}
+
+\item{alpha}{The significance level.}
 }
 \value{
 a vector of adjusted p-values.

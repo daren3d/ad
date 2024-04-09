@@ -9,11 +9,11 @@
 #'
 #' @return a list with p-values, diagonal of hat matrix and their sum (aka.
 #'  degrees of freedom), and the test statistic values.
-#' @export
 #'
 #' @examples
 #' # to do
-external <- function(mod, x, w){
+#' 
+external_ar1 <- function(mod, x, w) {
   n_obs <- length(x)
   ## Create hat matrix
   H <- matrix(as.numeric(NA), n_obs, n_obs)
@@ -54,11 +54,10 @@ external <- function(mod, x, w){
 #' @param w The (decomposed) information matrix.
 #'
 #' @return A `gamObject`.
-#' @export
 #'
 #' @examples
 #' # to do
-magic2gam <- function(gam_F, magic, w){
+magic2gam <- function(gam_F, magic, w) {
   mod_gam <- mgcv::gam(G = gam_F)
   #
   mod_gam$coefficients <- magic$b
@@ -93,11 +92,10 @@ magic2gam <- function(gam_F, magic, w){
 #'
 #' @return `data` with an additional column "ana", logical on whether the
 #'  observation is an anomaly.
-#' @export
 #'
 #' @examples
 #' # to do
-meth.external <- function(data, method, sig = 0.01){
+meth.external <- function(data, method, sig = 0.01) {
   uid <- unique(data$id)
   data$ana <- NA
   for(i in 1:length(uid)){
