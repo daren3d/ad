@@ -119,7 +119,7 @@ meth.external <- function(data, method, sig = 0.01) {
                          rank = mod2a$rank, C = mod2a$C, w = w)
     mod_i <- magic2gam(mod2a, mod2b, w)
     # check for anomalies
-    p_i1 <- external(mod_i, x, w)
+    p_i1 <- external_ar1(mod_i, x, w)
     p_i2 <- pea_adjust(p_i1, method = method)
     data$ana[rn] <- p_i2 <= sig
   }

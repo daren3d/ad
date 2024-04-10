@@ -8,7 +8,7 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Imports: bdots, mgcv
+Imports: stats, mgcv, nlme, bdots
 URL: https://github.com/daren3d/adc
 BugReports: https://github.com/daren3d/adc/issues
 Depends: 
