@@ -13,9 +13,9 @@ A monthly time series of Germany's money supply and foreign exchange between 192
 \format{
   A data frame with 31 observations on the following 3 variables.
   \describe{
-    \item{\code{date}}{a character vector.}
-    \item{\code{logM}}{a numeric vector.  M is real money supply.}
-    \item{\code{pi}}{a numeric vector.  Premium on a forward contract for foreign exchange.}
+    \item{\code{date}}{A character vector.  Year / month.}
+    \item{\code{logM}}{A numeric vector.  Natural log of the real money supply.}
+    \item{\code{pi}}{A numeric vector.  Premium on a forward contract for foreign exchange.}
   }
 }
 \details{
@@ -31,6 +31,6 @@ Eubank, R. (1985). Diagnostics for smoothing splines. \emph{Journal of the royal
 }
 \examples{
 data(GermanHyperinflation)
-## maybe str(GermanHyperinflation) ; plot(GermanHyperinflation) ...
+plot(logM ~ log(pi), data = GermanHyperinflation)
 }
 \keyword{datasets}
