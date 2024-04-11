@@ -2,4 +2,5 @@
 
 export(adc)
 export(pea_adjust)
+export(preplot)
 import(stats)
