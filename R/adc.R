@@ -1,29 +1,31 @@
 #' Anomaly detection and correction
-#' 
-#' `adc()` detects and corrects anomalies in functional data.  It sports two 
+#'
+#' `adc()` detects and corrects anomalies in functional data.  It sports two
 #' types of residuals (internal and external) for smoothing splines, and a
 #' variety of multiple comparison adjustments.
-#' 
+#'
 #' @references Kuwaye and Cho, 2024
 #'
-#' @param data A `data.frame` with colnames "id", "x", "y".
-#' @param eu Character string specifying the residual test.  Must be "ex" or 
+#' @param data A `data.frame` with column names "id" (subject identifier), "x"
+#'  (predictor) and "y" (response).
+#' @param eu Character string specifying the residual test.  Must be "ex" or
 #'  "in".
 #' @param pva Character string specifying p-value adjustment.  See [pea_adjust()].
 #' @param alpha Numeric value of nominal significance level.
 #'
-#' @return Original data with an additional columns: "ana" (logical on whether
-#'  the observation is an anomaly), "rep" (replacement value, if necessary), and
-#'  "apv" (adjusted p-value). 
-#'  
+#' @return Original data with additional columns: "ana" (logical on whether the
+#'  observation is an anomaly), "rep" (replacement value, if necessary), and
+#'  "apv" (adjusted p-value).
+#'
 #' @seealso [pea_adjust()].
-#' 
+#'
 #' @export
 #' @import stats
 #'
 #' @examples
 #' data("GermanHyperinflation")
-#' dat <- data.frame(x = log(GermanHyperinflation$pi),
+#' dat <- data.frame(id = 1,
+#'                   x = log(GermanHyperinflation$pi),
 #'                   y = GermanHyperinflation$logM)
 #' res <- adc(data = dat, eu = "in", pva = "none", alpha = 0.05)
 adc <- function(data, eu = "in", pva = "BY", alpha = 0.01) {
@@ -35,9 +37,9 @@ adc <- function(data, eu = "in", pva = "BY", alpha = 0.01) {
   } else {
     stop("Improper eu specified.")
   }
-  apv <- pea_adjust(res, method = pva, alpha = alpha)  # adjusted p-value
-  ana <- apv <= alpha  # anomalies
-  repl <- rep(NA, length(ana))  # replacement(s)
+  apv <- pea_adjust(res, method = pva, alpha = alpha)
+  ana <- apv <= alpha
+  repl <- rep(NA, length(ana))
   if(any(ana)) {
     for(a in which(ana)) {
       data2 <- data
@@ -46,9 +48,9 @@ adc <- function(data, eu = "in", pva = "BY", alpha = 0.01) {
       repl[a] <- predict(mod2, newdata = data.frame(data2[a, ]))
     }
   }
-  data$ana <- ana  # anomaly T/F
+  data$ana <- ana   # anomaly T/F
   data$rep <- repl  # replacement value
-  data$apv <- apv  # adjusted p-value
+  data$apv <- apv   # adjusted p-value
   return(data)
 }
 

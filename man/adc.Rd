@@ -7,7 +7,8 @@
 adc(data, eu = "in", pva = "BY", alpha = 0.01)
 }
 \arguments{
-\item{data}{A \code{data.frame} with colnames "id", "x", "y".}
+\item{data}{A \code{data.frame} with column names "id" (subject identifier), "x"
+(predictor) and "y" (response).}
 
 \item{eu}{Character string specifying the residual test.  Must be "ex" or
 "in".}
@@ -17,8 +18,8 @@ adc(data, eu = "in", pva = "BY", alpha = 0.01)
 \item{alpha}{Numeric value of nominal significance level.}
 }
 \value{
-Original data with an additional columns: "ana" (logical on whether
-the observation is an anomaly), "rep" (replacement value, if necessary), and
+Original data with additional columns: "ana" (logical on whether the
+observation is an anomaly), "rep" (replacement value, if necessary), and
 "apv" (adjusted p-value).
 }
 \description{
@@ -28,7 +29,8 @@ variety of multiple comparison adjustments.
 }
 \examples{
 data("GermanHyperinflation")
-dat <- data.frame(x = log(GermanHyperinflation$pi),
+dat <- data.frame(id = 1,
+                  x = log(GermanHyperinflation$pi),
                   y = GermanHyperinflation$logM)
 res <- adc(data = dat, eu = "in", pva = "none", alpha = 0.05)
 }
