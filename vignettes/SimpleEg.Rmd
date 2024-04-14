@@ -1,0 +1,52 @@
+---
+title: "Simple example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Simple example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+```{r setup}
+library(adc)
+```
+
+We will follow the example of Eubank (1985), and analyze Germany's hyperinflation in the 1920's.
+```{r}
+data("GermanHyperinflation")
+plot(logM ~ log(pi), data = GermanHyperinflation)
+```
+
+Before we can analyze the data, we must put it into the correct form with columns for `id`, `x` and `y`.
+```{r}
+dat <- data.frame(id = 1,
+                  x = log(GermanHyperinflation$pi),
+                  y = GermanHyperinflation$logM)
+```
+
+Now we will analyze the data with the internally studentized residuals, without adjusing for mutiple comparisons, and at the $0.05$ significance level.
+```{r}
+res <- adc(data = dat, eu = "in", pva = "none", alpha = 0.05)
+```
+
+We can examine the anomalie(s),
+```{r}
+table(res$ana)
+res[res$ana, ]
+```
+Our suspicions about the 19th observation are strengthened.
+
+Plot.
+```{r}
+res2 <- preplot(res = res)
+plot(y ~ x, data = res2, col = col, pch = pch)
+```
+
