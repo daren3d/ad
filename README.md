@@ -1,2 +1,4 @@
-# ad
-An anomaly detection and correction method inspired by Eubank's (1985) Diagnostics for smoothing splines.
+# adc
+Anomaly detection and correction
+
+A R package to accompany Kuwaye and Cho (2024).
