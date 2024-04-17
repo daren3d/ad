@@ -1,0 +1,58 @@
+---
+title: "Bigger example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Bigger example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+```{r setup}
+library(adc)
+```
+
+Data.
+```{r}
+set.seed(808)
+dat1 <- rbind(create.data("Beta", 1),
+              create.data("Cos", 2, 0),
+              create.data("Exp", 3, 2),
+              create.data("Quad", 4))
+dat2 <- data.frame(id = dat1$id,
+                  x = dat1$x,
+                  y = dat1$y,
+                  ana = NA,
+                  rep = NA,
+                  apv = NA)
+uid <- unique(dat2$id)
+for(i in 1:length(uid)) {
+  rn <- dat2$id == uid[i]
+  dat2_i <- dat2[rn, ]
+  dat2[rn, ] <- adc(dat2_i)
+}
+dat3 <- prepplot(dat2)
+```
+
+```{r,eval=requireNamespace("ggplot2")}
+library(ggplot2)
+ggplot(dat3, aes(x, y)) +
+  geom_point(aes(colour = col2, shape = pch2)) +
+  facet_wrap(~ id2) +
+  scale_colour_discrete(name = NULL,
+                        breaks = 1:3,
+                        labels = c("Normal", "Anomaly", "Replacement")) +
+  scale_shape_discrete(name = NULL,
+                       breaks = 1:2,
+                       labels = c("Observed", "Replacement")) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
