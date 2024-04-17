@@ -46,7 +46,6 @@ Our suspicions about the 19th observation are strengthened.
 
 Plot.
 ```{r}
-res2 <- preplot(res = res)
+res2 <- prepplot(res = res)
 plot(y ~ x, data = res2, col = col, pch = pch)
 ```
-
