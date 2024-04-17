@@ -15,9 +15,9 @@
 #'                   x = log(GermanHyperinflation$pi),
 #'                   y = GermanHyperinflation$logM)
 #' res  <- adc(data = dat, eu = "in", pva = "none", alpha = 0.05)
-#' res2 <- preplot(res = res)
+#' res2 <- prepplot(res = res)
 #' plot(y ~ x, data = res2, col = col, pch = pch)
-preplot <- function(res) {
+prepplot <- function(res) {
   if(!any(res$ana)) {
     cat("No plot because no anomalies.")
     return(res)
