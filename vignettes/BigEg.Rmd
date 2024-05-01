@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r,include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -23,15 +23,15 @@ Data.
 ```{r}
 set.seed(808)
 dat1 <- rbind(create.data("Beta", 1),
-              create.data("Cos", 2, 0),
-              create.data("Exp", 3, 2),
+              create.data("Cos" , 2, 0),
+              create.data("Exp" , 3, 2),
               create.data("Quad", 4))
 dat2 <- data.frame(id = dat1$id,
-                  x = dat1$x,
-                  y = dat1$y,
-                  ana = NA,
-                  rep = NA,
-                  apv = NA)
+                   x = dat1$x,
+                   y = dat1$y,
+                   ana = NA,
+                   rep = NA,
+                   apv = NA)
 uid <- unique(dat2$id)
 for(i in 1:length(uid)) {
   rn <- dat2$id == uid[i]
@@ -44,15 +44,10 @@ dat3 <- prepplot(dat2)
 ```{r,eval=requireNamespace("ggplot2")}
 library(ggplot2)
 ggplot(dat3, aes(x, y)) +
-  geom_point(aes(colour = col2, shape = pch2)) +
-  facet_wrap(~ id2) +
-  scale_colour_discrete(name = NULL,
-                        breaks = 1:3,
-                        labels = c("Normal", "Anomaly", "Replacement")) +
-  scale_shape_discrete(name = NULL,
-                       breaks = 1:2,
-                       labels = c("Observed", "Replacement")) +
+  geom_point(aes(shape = tpe2, colour = tpe2)) +
+  scale_shape_manual(values = c(16, 16, 17)) +
+  labs(colour = NULL, shape = NULL) +
   theme_bw() +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom") +
+  facet_wrap(~ id2)
 ```
-

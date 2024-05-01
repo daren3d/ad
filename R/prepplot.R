@@ -26,6 +26,7 @@ prepplot <- function(res) {
   res2b <- res[res$ana, , drop = FALSE]
   res2b$col <- 3
   res2b$pch <- 2
+  res2b$tpe <- 3
   res2b$y <- res2b$rep
   # Sort the adjusted p-values
   id <- res2b$id[order(res2b$apv)]
@@ -34,10 +35,13 @@ prepplot <- function(res) {
   res2a <- res[res$id %in% id, ]
   res2a$col <- as.numeric(res2a$ana) + 1
   res2a$pch <- 1
+  res2a$tpe <- res2a$col
   #
-  res2d <- rbind(res2a, res2b)
-  res2d$id2  <- factor(res2d$id,  levels = id )
-  res2d$col2 <- factor(res2d$col, levels = 1:3)
-  res2d$pch2 <- factor(res2d$pch, levels = 1:2)
-  return(res2d)
+  res2c <- rbind(res2a, res2b)
+  res2c$id2  <- factor(res2c$id,  levels = id)
+  res2c$col2 <- factor(res2c$col)
+  res2c$pch2 <- factor(res2c$pch)
+  res2c$tpe2 <- factor(res2c$tpe, labels = c(
+    "Observed, Normal", "Observed, Anomaly", "Replacement"))
+  return(res2c)
 }
