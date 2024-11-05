@@ -21,18 +21,18 @@
 #'               create.data("Quad", 4))
 #' plot(y ~ x, data = dat1, col = id)
 create.data <- function(fun, id, zeta = 1, sigma = 0.1, n = 50) {
-  fun <- match.arg(fun, paste0(c("Beta", "Cos", "Exp", "Quad"), ".create"))
-  te <- seq(0, 1, length.out = n)  # equally spaced t
+  te <- seq(0, 1, length.out = n)  # Equally spaced t
   half_step <- (te[2] - te[1]) / 2
   te_minus <- te - half_step
   te_plus <- te + half_step
-  tu <- runif(n, te_minus, te_plus)
-  x <- (tu - min(tu)) / (max(tu) - min(tu))  # scale back to [0,1]
-  f <- do.call(fun, list(t = x))
-  u <- sample(2:(n-1), 1)
+  tu <- runif(n, te_minus, te_plus)  # Unequally spaced t
+  x <- (tu - min(tu)) / (max(tu) - min(tu))  # Scale back to [0,1]
+  fun <- match.arg(fun, paste0(c("Beta", "Cos", "Exp", "Quad"), ".create"))
+  f <- do.call(fun, list(t = x))  # Underlying function
+  u <- sample(2:(n - 1), 1)  # Anomaly location
   z <- numeric(n)
   z[u] <- zeta
-  e <- rnorm(n, sd = sigma)
+  e <- rnorm(n, sd = sigma)  # Noise
   y <- f + z + e
   data.frame(id = id,
              x = x,
