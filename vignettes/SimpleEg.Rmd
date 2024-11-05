@@ -1,5 +1,5 @@
 ---
-title: "Simple example"
+title: "Simple Example"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Simple example}
@@ -19,20 +19,21 @@ knitr::opts_chunk$set(
 library(adc)
 ```
 
-We will follow the example of Eubank (1985), and analyze Germany's hyperinflation in the 1920's.
+We will follow the example of Eubank (1985), and analyze the hyperinflation in Weimar Germany during the 1920's.
 ```{r}
 data("GermanHyperinflation")
 plot(logM ~ log(pi), data = GermanHyperinflation)
 ```
+As mentioned in Eubank (1985), the 19th observation is suspicious.
 
-Before we can analyze the data, we must put it into the correct form with columns for `id`, `x` and `y`.
+Before the data can be analyzed, it must be put into the correct form with columns for `id`, `x` and `y`.
 ```{r}
 dat <- data.frame(id = 1,
                   x = log(GermanHyperinflation$pi),
                   y = GermanHyperinflation$logM)
 ```
 
-Now we will analyze the data with the internally studentized residuals, without adjusing for mutiple comparisons, and at the $0.05$ significance level.
+Analyze the data with the internally studentized residuals, without adjusing for mutiple comparisons, and at the $0.05$ significance level.
 ```{r}
 res <- adc(data = dat, eu = "in", pva = "none", alpha = 0.05)
 ```
