@@ -1,0 +1,106 @@
+---
+title: "adc"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{adc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r,include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+```{r setup}
+library(adc)
+```
+
+## Example 1: German Hyperinflation
+
+In our first example, we will analyze the hyperinflation in Weimar Germany during the 1920's.  The data are monthly measurements of Germany's money supply and foreign exchange between 1921 and 1923.
+```{r}
+data("GermanHyperinflation")
+plot(logM ~ log(pi), data = GermanHyperinflation)
+```
+
+Before the data can be analyzed, it must be put into the correct form with columns for `id`, `x` and `y`.  (`id` is set to 1 because there is one subject.)
+```{r}
+dat <- data.frame(id = 1,
+                  x = log(GermanHyperinflation$pi),
+                  y = GermanHyperinflation$logM)
+```
+
+Now the data can be analyzed with the internally studentized residuals at the 0.05 significance level, and no p-value adjustment.
+```{r}
+res <- adc(data = dat, eu = "in", pva = "none", alpha = 0.05)
+```
+
+We can examine the anomalie(s),
+```{r}
+table(res$ana)
+res[res$ana, ]
+```
+Only the 29th observation is determined to be anomalous.  
+
+The results can also be plotted to gain insight.
+```{r}
+res2 <- prepplot(res = res)
+plot(y ~ x, data = res2, col = col, pch = pch)
+```
+The anomalous observation (red circle) lies far from the downward trend exhibited by the surrounding observations.  Furthermore, the replacement value (green triangle) is from the fitted curve.
+
+## Example 2: More subjects
+
+In this example, we will use the functions supplied with the package related to the simulation study.  Note that subjects 2 and 3 have anomalies of size 0 and 2 respectively, while subjects 1 and 4 have anomalies of size 1 (the default).  Therefore, subject 3 will have the largest anomaly, while subject 2 does not have an anomaly.
+```{r}
+set.seed(808)
+dat1 <- rbind(create.data("Beta", 1),
+              create.data("Cos" , 2, 0),
+              create.data("Exp" , 3, 2),
+              create.data("Quad", 4))
+```
+
+In the case of multiple subjects, we recommend plotting the results using **ggplot2** to take advantage of facetting by subject.
+```{r,eval=requireNamespace("ggplot2")}
+library(ggplot2)
+ggplot(dat1, aes(x, y)) +
+  geom_point() +
+  theme_bw() +
+  facet_wrap(~ id) +
+  scale_x_continuous(breaks = c(0, 0.5, 1))
+```
+
+We append some columns (`ana`, `rep` and `apv`), then analyze the four subjects sequentially with a `for` loop.  The defaults of `adc` are used corresponding with: the internally studentized residuals (`eu = "in"`), the Bejamini & Yekutieli procedure (`pva = "BY"`) and 0.01 level (`alpha = 0.01`).
+```{r}
+dat2 <- data.frame(id = dat1$id,
+                   x = dat1$x,
+                   y = dat1$y,
+                   ana = NA,
+                   rep = NA,
+                   apv = NA)
+uid <- unique(dat2$id)
+for(i in 1:length(uid)) {
+  rn <- dat2$id == uid[i]
+  dat2_i <- dat2[rn, ]
+  dat2[rn, ] <- adc(dat2_i)
+}
+table(dat2$ana)
+dat2[dat2$ana, ]
+```
+As designed, anomalies were detected in subjects 1, 3 and 4; and subject 3 has the smallest adjusted p-value (`apv`), which corresponds with it being assigned the largest anomaly size.  Thus, only these subjects will be plotted according to their adjusted p-values.
+
+```{r,eval=requireNamespace("ggplot2")}
+dat3 <- prepplot(dat2)
+ggplot(dat3, aes(x, y)) +
+  geom_point(aes(shape = tpe2, colour = tpe2)) +
+  scale_shape_manual(values = c(16, 16, 17)) +
+  labs(colour = NULL, shape = NULL) +
+  theme_bw() +
+  theme(legend.position = "bottom") +
+  facet_wrap(~ id2, nrow = 2) +
+  scale_x_continuous(breaks = c(0, 0.5, 1))
+```
