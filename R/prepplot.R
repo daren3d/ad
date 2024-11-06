@@ -38,7 +38,7 @@ prepplot <- function(res) {
   res2a$tpe <- res2a$col
   #
   res2c <- rbind(res2a, res2b)
-  res2c$id2  <- factor(res2c$id,  levels = id)
+  res2c$id2  <- factor(res2c$id, levels = id)
   res2c$col2 <- factor(res2c$col)
   res2c$pch2 <- factor(res2c$pch)
   res2c$tpe2 <- factor(res2c$tpe, labels = c(
