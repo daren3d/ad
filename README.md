@@ -12,4 +12,4 @@ The method consists of the following basic steps:
 4. Verify significance.
 5. Suggest a replacement for observations deemed anamolous.
 
-In addition, this packge contains two vignettes to help you get started.
+In addition, this packge contains a vignette to help you get started.
