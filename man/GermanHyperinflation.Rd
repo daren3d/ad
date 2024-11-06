@@ -18,9 +18,6 @@ A monthly time series of Germany's money supply and foreign exchange between 192
     \item{\code{pi}}{A numeric vector.  Premium on a forward contract for foreign exchange.}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
 \source{
 %%  ~~ reference to a publication or URL from which the data were obtained ~~
 Wecker, W. E. and Ansley, C. F. (1981) Extensions and examples of the signal extraction approach to regression. To appear in \emph{Applied Time Series Analysis of Economic Data} (A. Zeilner, ed.)
